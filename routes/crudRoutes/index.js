@@ -80,4 +80,25 @@ router.put("/goes/:id", async (req, res) => {
         res.send(error)
     }
   });
+  router.put("/ok/:id", async (req, res) => {
+    try {
+      const subscription = await Subscription.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+      });
+      if (!subscription) res.send("Not found");
+      res.send(subscription);
+    } catch (error) {
+      res.send("Error: " + error);
+    }
+    });
+    router.delete("/ok/:id", async (req, res) => {
+    try {
+      const subscription = await Subscription.findByIdAndDelete(req.params.id);
+      if (!subscription) res.send("Not found");
+      res.send(subscription);
+    } catch (error) {
+      res.send("Error: " + error);
+    }
+    });
 export default router;
