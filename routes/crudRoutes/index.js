@@ -1,5 +1,7 @@
 import  Router from "express";
 import Member from "../../models/Member.js";
+import MembershipPlan from "../../models/MembershipPlan.js";
+
 const router=Router();
 router.post("/go",async(req,res)=>{
     try{
@@ -15,6 +17,25 @@ router.get("/go",async(req,res)=>{
     try{
     const member = await Member.find();
     res.send(member);
+}catch(error){
+        res.send(error)
+    }
+});
+
+router.post("/goes",async(req,res)=>{
+    try{
+      const membershipplan = MembershipPlan(req.body);
+      await membershipplan.save();
+      res.send("created");
+    }
+    catch(error){
+      res.send("error");
+    }
+  });
+  router.get("/goes",async(req,res)=>{
+    try{
+    const membershipplan = await MembershipPlan.find();
+    res.send(membershipplan);
 }catch(error){
         res.send(error)
     }
