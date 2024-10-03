@@ -40,4 +40,25 @@ router.post("/goes",async(req,res)=>{
         res.send(error)
     }
 });
+router.put("/goes/:id", async (req, res) => {
+    try {
+      const membershipplan = await MembershipPlan.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+      });
+      if (!membershipplan) res.send("Not found");
+      res.send(membershipplan);
+    } catch (error) {
+      res.send("Error: " + error);
+    }
+  });
+  router.delete("/goes/:id", async (req, res) => {
+    try {
+      const membershipplan = await MembershipPlan.findByIdAndDelete(req.params.id);
+      if (!membershipplan) res.send("Not found");
+      res.send(membershipplan);
+    } catch (error) {
+      res.send("Error: " + error);
+    }
+  });
 export default router;
