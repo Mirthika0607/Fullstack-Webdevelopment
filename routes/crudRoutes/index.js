@@ -1,6 +1,7 @@
 import  Router from "express";
 import Member from "../../models/Member.js";
 import MembershipPlan from "../../models/MembershipPlan.js";
+import Subscription from "../../models/Subscription.js";
 
 const router=Router();
 router.post("/go",async(req,res)=>{
@@ -59,6 +60,24 @@ router.put("/goes/:id", async (req, res) => {
       res.send(membershipplan);
     } catch (error) {
       res.send("Error: " + error);
+    }
+  });
+  router.post("/ok",async(req,res)=>{
+    try{
+      const subscription = Subscription(req.body);
+      await subscription.save();
+      res.send("created");
+    }
+    catch(error){
+      res.send("error");
+    }
+  });
+  router.get("/ok",async(req,res)=>{
+    try{
+    const subscription = await Subscription.find();
+    res.send(subscription);
+  }catch(error){
+        res.send(error)
     }
   });
 export default router;
